@@ -47,7 +47,7 @@ addNoteForm.onsubmit = (e) => {
         body,
         category,
         id: generateId(),
-        createdAt: Date.now(),
+        createdAt: moment().format('lll'),
         lastUpdate: Date.now()
     })
 
@@ -73,18 +73,52 @@ function displayNotes() {
     for (let i = 0; i < notes.length; i++) {
         // Guardamos los datos de usuario en note.
         const note = notes[i];
+        //Transformo el atributo note.createdAt a un formato mas comodo
+
         // Creamos en un string el esqueleto de la nota,
         // luego el contenido que ingreso el usuario.
         const newNote = `
         <div class="col-4">
-            <div class="card text-white bg-warning mb-3 mx-2 h-100">
+        <div class="card text-white bg-warning h-100">
+            <button class="p-0 border-0 bg-transparent" id="button${note.id}" data-toggle="modal" data-target="#modal${note.id}">
                 <div class="card-header">${note.title}</div>
                 <div class="card-body">
                     <h5 class="card-title">${note.title}</h5>
                     <p class="card-text">${note.body}</p>
                 </div>
-            </div>
+                <div class="card-footer border-0" style="backgorund-color: inherit;"> <div>
+                </button>
         </div>
+        </div>
+        <!-- Modal -->
+                <div class="modal fade" id="modal${note.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-modal">
+                                <h2 class="modal-title" id="exampleModalLabel">${note.title}</h2>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body bg-modal" style="word-wrap: break-word;">
+                                <h5 class="modal-title" id="exampleModalLabel">${note.category}</h5>
+                                <small id="noteBodyHelp" class="form-text text-muted">
+                                Creado en ${note.createdAt}.
+                                </small>
+                                <br>
+                                <p>${note.body}</p>
+                                <hr>
+                                <small id="noteBodyHelp" class="form-text text-muted">
+                                Ultima modificación: ${note.createdAt}.
+                                </small>
+                            </div>
+                            <div class="modal-footer bg-modal">
+                            <button onclick="deleteNote('${note.id}')" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         `
         // Agregamos el string de la nota al array content.
         content.push(newNote)
@@ -137,4 +171,20 @@ addCategoryForm.onsubmit = (e) => {
 function getSelectedCheckbox(name) {
     const checked = document.querySelectorAll(`input[name="${name}"]:checked`)[0].value;
     return checked;
+}
+
+//Funcion para borrar nota y su modal
+function deleteNote(noteId) {
+    const modalToDelete = document.getElementById('modal'+noteId)
+    // Traer el banco de notas de localStorage.
+    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    // Eliminar la nota, usando filter() para filtrar por le Id
+    // recibido como parámetro.
+    const filteredNotes = notes.filter((note) => note.id !== noteId);
+    // Guardar el banco actualizado en localStorage.
+    const notesJson = JSON.stringify(filteredNotes);
+    localStorage.setItem('notes', notesJson);
+    // Actualizar la lista de notas en html llamando a la función displayNotes(). 
+    displayNotes();
+    $(modalToDelete).modal('hide')
 }
