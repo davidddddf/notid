@@ -5,6 +5,11 @@ const addNoteModal = document.getElementById('addNoteModal')
 const addNoteForm = document.getElementById('addNoteForm')
 const noteTitleInput = document.getElementById('noteTitleInput')
 const noteBodyInput = document.getElementById('noteBodyInput')
+let editNoteId = ''
+const editNoteForm = document.getElementById('editNoteForm')
+//Modal de edición
+const editNoteTitleInput = document.getElementById('editNoteTitleInput')
+const editNoteBodyInput = document.getElementById('editNoteBodyInput')
 
 //
 //Categorias
@@ -34,7 +39,7 @@ addNoteForm.onsubmit = (e) => {
     // Traer el banco de notas de localStorage,
     // o array vacio por defecto en caso que no exista.
     const notes = JSON.parse(localStorage.getItem('notes')) || [];
-    const body = noteBodyInput.value;
+    const body = noteBodyInput.value;    
     const title = noteTitleInput.value;
     //Traigo tambien el array de categorias, necesario para el select de categorias
     const categories = JSON.parse(localStorage.getItem('categories'));
@@ -48,7 +53,7 @@ addNoteForm.onsubmit = (e) => {
         category,
         id: generateId(),
         createdAt: moment().format('lll'),
-        lastUpdate: Date.now()
+        lastUpdate: moment().format('lll')
     })
 
     // Guardar el banco de notas en localStorage.
@@ -62,6 +67,83 @@ addNoteForm.onsubmit = (e) => {
     // Cerrar el modal
     $(addNoteModal).modal('hide')
     displayNotes();
+}
+
+// Funcion para obtener modal de notas
+const getModal = (note) => {
+return `<!-- Modal -->
+<div class="modal fade" id="modal${note.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-modal">
+                <h2 class="modal-title" id="exampleModalLabel">${note.title}</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-modal" style="word-wrap: break-word;">
+                <h5 class="modal-title" id="exampleModalLabel">${note.category}</h5>
+                <small id="noteBodyHelp" class="form-text text-muted">
+                Creado en ${note.createdAt}.
+                </small>
+                <br>
+                <p>${note.body}</p>
+                <hr>
+                <small id="noteBodyHelp" class="form-text text-muted">
+                Ultima modificación: ${note.createdAt}.
+                </small>
+            </div>
+            <div class="modal-footer bg-modal">
+            <button type="button" id="editNoteButton" onclick="loadEditForm('${note.id}')" class="btn btn-info" data-toggle="modal" data-target="#editNoteModal"><i class="fas fa-edit"></i></button>
+            <button onclick="deleteNote('${note.id}')" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+`
+}
+
+//Función para cargar los valores en el modal para editar nota
+const loadEditForm = (noteId) => {
+    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    const note = notes.find((v) => v.id ===noteId);
+    editNoteTitleInput.value = note.title;
+    editNoteBodyInput.value = note.body;
+    //Almaceno el ID de la ultima nota modificada
+    editNoteId = noteId;
+
+}
+
+editNoteForm.onsubmit = (e) => {
+    e.preventDefault()
+    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    const body = editNoteBodyInput.value;    
+    const title = editNoteTitleInput.value;
+
+    //Actualizo propiedades de la nota
+    const updatedNote = notes.map((v) => {
+        if (v.id === editNoteId){
+            const note = {
+                //Usando spread sintax para copiar las propiedades
+                ...v,
+                title: title,
+                body: body,
+                lastUpdate: moment().format('lll')
+            }
+            return note
+        } else {
+            return v;
+        }
+    })
+    //Guardo la actualizacion en LS
+    const notesJson = JSON.stringify(updatedNote)
+    localStorage.setItem('notes', notesJson);
+    editNoteForm.reset();
+    displayNotes();
+
+    $('.modal-backdrop').remove();
+    $(editNoteModal).modal('hide')
 }
 
 //Anadir nueva nota en pantalla
@@ -79,46 +161,18 @@ function displayNotes() {
         // luego el contenido que ingreso el usuario.
         const newNote = `
         <div class="col-4">
-        <div class="card text-white bg-warning h-100">
+        <div class="card text-white bg-warning h-100" >
             <button class="p-0 border-0 bg-transparent" id="button${note.id}" data-toggle="modal" data-target="#modal${note.id}">
                 <div class="card-header">${note.title}</div>
-                <div class="card-body">
+                </button>
+                <div class="card-body text-dark">
                     <h5 class="card-title">${note.title}</h5>
                     <p class="card-text">${note.body}</p>
                 </div>
-                <div class="card-footer border-0" style="backgorund-color: inherit;"> <div>
-                </button>
+                
         </div>
         </div>
-        <!-- Modal -->
-                <div class="modal fade" id="modal${note.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header bg-modal">
-                                <h2 class="modal-title" id="exampleModalLabel">${note.title}</h2>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body bg-modal" style="word-wrap: break-word;">
-                                <h5 class="modal-title" id="exampleModalLabel">${note.category}</h5>
-                                <small id="noteBodyHelp" class="form-text text-muted">
-                                Creado en ${note.createdAt}.
-                                </small>
-                                <br>
-                                <p>${note.body}</p>
-                                <hr>
-                                <small id="noteBodyHelp" class="form-text text-muted">
-                                Ultima modificación: ${note.createdAt}.
-                                </small>
-                            </div>
-                            <div class="modal-footer bg-modal">
-                            <button onclick="deleteNote('${note.id}')" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        ${getModal(note)}
         `
         // Agregamos el string de la nota al array content.
         content.push(newNote)
@@ -153,7 +207,7 @@ addCategoryForm.onsubmit = (e) => {
 
     // Añadir la categoria como opcion
     const newOption = document.createElement('option')
-    newOption.textContent = `${name}`
+    newOption.textContent = `${name}`;
     noteCategoriesSelect.appendChild(newOption);
 
     // Guardar el banco de categorias en localStorage.
@@ -173,7 +227,7 @@ function getSelectedCheckbox(name) {
     return checked;
 }
 
-//Funcion para borrar nota y su modal
+//Función para borrar nota y su modal
 function deleteNote(noteId) {
     const modalToDelete = document.getElementById('modal'+noteId)
     // Traer el banco de notas de localStorage.
