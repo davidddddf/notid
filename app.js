@@ -10,6 +10,9 @@ const editNoteForm = document.getElementById('editNoteForm')
 //Modal de edición
 const editNoteTitleInput = document.getElementById('editNoteTitleInput')
 const editNoteBodyInput = document.getElementById('editNoteBodyInput')
+//Búsqueda
+const searchTop = document.getElementById('searchTop');
+const searchForm = document.getElementById('searchForm');
 
 //
 //Categorias
@@ -66,7 +69,7 @@ addNoteForm.onsubmit = (e) => {
     addNoteForm.reset();
     // Cerrar el modal
     $(addNoteModal).modal('hide')
-    displayNotes();
+    displayAllNotes();
 }
 
 // Funcion para obtener modal de notas
@@ -140,16 +143,24 @@ editNoteForm.onsubmit = (e) => {
     const notesJson = JSON.stringify(updatedNote)
     localStorage.setItem('notes', notesJson);
     editNoteForm.reset();
-    displayNotes();
+    displayAllNotes();
 
     $('.modal-backdrop').remove();
     $(editNoteModal).modal('hide')
 }
 
-//Anadir nueva nota en pantalla
-function displayNotes() {
+function displayAllNotes() {
     // Banco de notas desde de localStorage.
     const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    const content = [];
+
+    displayNotes(notes)
+}
+
+//Anadir nueva nota en pantalla
+function displayNotes(notes) {
+    // Banco de notas desde de localStorage.
+    //const notes = JSON.parse(localStorage.getItem('notes')) || [];
     const content = [];
 
     for (let i = 0; i < notes.length; i++) {
@@ -182,7 +193,7 @@ function displayNotes() {
     notesContainer.innerHTML = content.join('')
 }
 
-displayNotes();
+displayAllNotes();
 
 //Crear nueva categoria
 
@@ -239,6 +250,26 @@ function deleteNote(noteId) {
     const notesJson = JSON.stringify(filteredNotes);
     localStorage.setItem('notes', notesJson);
     // Actualizar la lista de notas en html llamando a la función displayNotes(). 
-    displayNotes();
+    displayAllNotes();
     $(modalToDelete).modal('hide')
+}
+
+//Búsqueda
+searchForm.onsubmit = (e) => {
+    e.preventDefault();
+    // Guardar en una constante el banco de notas
+    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    // Transformar en minúsculas la palabra buscada y guardarla en una variable.
+    const term = searchTop.value.toLowerCase();
+    console.log("term", term);
+    // Guardar el array resultante de aplicar el método filter sobre el array de usuarios,
+    // filtrando para obtener solo los que incluyen la palabra buscada.
+    const filteredNotes = notes.filter((u) => (
+        // Usar el método toLowerCase() para transformar el nombre y apellido a minúscula,
+        // y el método includes() que evalúa si se incluye o no la palabra buscada.
+        u.title.toLowerCase().includes(term) || u.body.toLowerCase().includes(term)
+    ))
+    // Llamar a la función displayNotes, pasando por parámetros la lista filtrada de usuarios.
+    displayNotes(filteredNotes);
+        console.log(`Se cargó la lista filtrada de usuarios en la tabla. ${filteredNotes.length} resultados encontrados. 🧐`);
 }
