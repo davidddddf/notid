@@ -1,3 +1,48 @@
+/* Colores NotID */
+.notid-bg-mist{
+    background-color: #90afc5;
+}
+.notid-bg-stone{
+    background-color: #336b87;
+}
+.notid-bg-shadow{
+    background-color: #2a3132;
+}
+.notid-bg-autimnFoliage{
+    background-color: #763626;
+}
+.notid-title{
+    color: #90afc5;
+    font-family: 'Lobster', cursive;
+}
+.notid-mist{
+    color: #90afc5;
+    font-family: 'Nunito', sans-serif;
+}
+.notid-stone{
+    color: #336b87;
+    font-family: 'Nunito', sans-serif;
+}
+.notid-shadow{
+    color: #2a3132;
+    font-family: 'Nunito', sans-serif;
+}
+.notid-autimnFoliage{
+    color: #763626;
+    font-family: 'Nunito', sans-serif;
+}
+.notid-btn-autimnFoliage{
+    color: #90afc5;
+    border-color: #90afc5;
+    font-family: 'Nunito', sans-serif;
+}
+
+.sidebar{
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+}
+
 /* Font Awesome Icons */
 .fa-cat {
     color: orange;

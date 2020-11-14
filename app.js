@@ -19,7 +19,7 @@ const searchForm = document.getElementById('searchForm');
 //Categoria por defecto
 const defaultCategory = [{
     name: "Sin categoria",
-    description: "Categoria por defecto",
+    description: "Categoría por defecto",
     color: "brown",
     icon: "horse"
 }]
@@ -31,7 +31,7 @@ const addCategoryForm = document.getElementById('addCategoryForm')
 const categoryNameInput = document.getElementById('categoryNameInput')
 const categoryDescriptionInput = document.getElementById('categoryDescriptionInput')
 
-//Funcion para generar ID aleatorio
+//Función para generar ID aleatorio
 const generateId = function() {
     return '_' + Math.random().toString(36).substr(2,9);
 }
@@ -40,11 +40,11 @@ const generateId = function() {
 addNoteForm.onsubmit = (e) => {
     e.preventDefault();
     // Traer el banco de notas de localStorage,
-    // o array vacio por defecto en caso que no exista.
+    // o array vacío por defecto en caso que no exista.
     const notes = JSON.parse(localStorage.getItem('notes')) || [];
     const body = noteBodyInput.value;    
     const title = noteTitleInput.value;
-    //Traigo tambien el array de categorias, necesario para el select de categorias
+    //Traigo también el array de categorías, necesario para el select de categorías
     const categories = JSON.parse(localStorage.getItem('categories'));
     const noteCategoriesSelect = document.getElementById('noteCategoriesSelect').options.selectedIndex;
     const category = categories[noteCategoriesSelect].name;
@@ -72,7 +72,7 @@ addNoteForm.onsubmit = (e) => {
     displayAllNotes();
 }
 
-// Funcion para obtener modal de notas
+// Función para obtener modal de notas
 const getModal = (note) => {
 return `<!-- Modal -->
 <div class="modal fade" id="modal${note.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -139,7 +139,7 @@ editNoteForm.onsubmit = (e) => {
             return v;
         }
     })
-    //Guardo la actualizacion en LS
+    //Guardo la actualización en LS
     const notesJson = JSON.stringify(updatedNote)
     localStorage.setItem('notes', notesJson);
     editNoteForm.reset();
