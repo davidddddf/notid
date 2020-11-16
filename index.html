@@ -21,229 +21,245 @@
 <body>
   <div class="container-fluid px-0">
     <!-- Navbar -->
-    <nav class="navbar navbar-dark sticky-top notid-bg-shadow">
-      <div class="container">
-        <a class="navbar-brand notid-title pl-3" href="#">
+    <nav class="navbar navbar-dark sticky-top notid-bg-shadow notid-navbar">
+      <div class="container px-0">
+        <a class="navbar-brand notid-title pl-1" href="#">
           <img src="/img/notidLogo.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
           Notid 
         </a>
-        <button class="btn notid-btn-autimnFoliage my-2 my-sm-0" type="button" title="log out"><i class="fas fa-sign-out-alt"></i></button>
+        <button class="btn notid-btn-mist my-2 my-sm-0" type="button" title="log out"><i class="fas fa-sign-out-alt"></i></button>
       </div>
     </nav>
     <!--     -->
     <!-- Cuerpo de la página -->
       <!-- Sidebar -->
-      <div class="container">
-        <nav id="idd" class="sidebar col-3 col-lg-2 d-lg-block nav-dark notid-bg-stone collapse"></nav>
+      <div class="container px-0">
+        <div class="row">
+          <nav class="col-3 col-lg-2 d-none d-md-block nav-dark notid-bg-autimnFoliage sidebar collapse">
+            <div class="notid-sidebar-content">
+              <h5 class="notid-white mt-3"><i class="fas fa-layer-group"></i> Categorías</h5> 
+              <ul class="nav flex-column notid-white" id="sidebarCategorias"></ul>
+            </div>
+          </nav>
+
+        <div class="col-12 col-md-9 col-lg-10 px-md-5">
+          <div class="d-flex justify-content-between py-3 mb-3 border-bottom">
+            <h1 class="mb-0">Mis notas</h1>
+            <div class="btn-group">
+              <button class="btn btn-outline-dark notid-btn-autimnFoliage"><i class="fas fa-th"></i></button>
+              <button class="btn btn-outline-dark notid-btn-autimnFoliage"><i class="fas fa-th-list"></i></button>
+            </div>
+          </div>
+          
+          <section>
+            <div class="d-flex justify-content-end mb-3">
+              <button type="button" id="addNote" class="btn notid-btn-autimnFoliage mx-1" data-toggle="modal" data-target="#addNoteModal"><i class="fas fa-plus"></i> Nota</button>
+              <button type="button" id="addCategory" class="btn notid-btn-autimnFoliage mx-1" data-toggle="modal" data-target="#addCategoryModal"><i class="fas fa-plus"></i> Categoría</button>
+            </div>
+            
+      
+            <!-- Contenedor de notas y sus modals-->
+            <div class="row notid-notes-container" id="notesContainer"></div>
+            <!--    -->
+      
+            <!-- Modal para insertar nota -->
+            <div class="modal fade" id="addNoteModal" tabindex="-1">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Crear nota</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="addNoteForm">
+                      <div class="form-group">
+                        <label for="noteTitleInput">Título</label>
+                        <input type="text" class="form-control" id="noteTitleInput" maxlength="60" placeholder="Título de la nota" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="noteBodyInput">Contenido</label>
+                        <textarea class="form-control" id="noteBodyInput" rows="10" maxlength="500" required></textarea>
+                        <small id="noteBodyHelp" class="form-text text-muted">
+                          Máximo 500 caracteres.
+                        </small>
+                      </div>
+                              <div class="form-group">
+                                <label for="noteCategoriesSelect">Categoría</label>
+                                <select class="form-control" id="noteCategoriesSelect">
+                                  <option value="ahre">Sin categoria</option>
+                                  
+                                </select>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Crear</button>
+                              </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+            <!-- Modal para crear categoria -->
+            <div class="modal fade" id="addCategoryModal" tabindex="-1">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header bg-modal">
+                    <h5 class="modal-title">Crear categoría</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body bg-modal">
+                    <form id="addCategoryForm">
+                      <div class="form-group">
+                        <label for="categoryNameInput">Nombre</label>
+                        <input type="text" class="form-control" id="categoryNameInput" maxlength="20" placeholder="Nombre de nueva categoría" required>
+                        <small id="" class="form-text text-muted">
+                          Máximo 20 caracteres.
+                        </small>
+                      </div>
+                      <div class="form-group">
+                        <label for="categoryDescriptionInput">Descripción</label>
+                        <input type="text" class="form-control" id="categoryDescriptionInput" maxlength="200" placeholder="Breve descripcion de la categoría" required>
+                        <small id="" class="form-text text-muted">
+                          Máximo 200 caracteres.
+                        </small>
+                      </div>
+                      <hr>
+      
+                      <div class="row">
+                        <div class="col text-center">
+                          <label for="categoryColorInput" class="">Color</label>
+                          <div class="form-group d-flex justify-content-around">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="gridRadiosColor" type="radio" id="inlineCheckbox1" value="primary" required>
+                              <label class="form-check-label" for="inlineCheckbox1"><span class="badge badge-primary text-primary" >[]</span></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="gridRadiosColor" type="radio" id="inlineCheckbox2" value="danger">
+                              <label class="form-check-label" for="inlineCheckbox2"><span class="badge badge-danger text-danger" >[]</span></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="gridRadiosColor" type="radio" id="inlineCheckbox3" value="warning">
+                              <label class="form-check-label" for="inlineCheckbox3"><span class="badge badge-warning text-warning" >[]</span></label>
+                            </div>
+                          </div>
+                          <div class="form-group d-flex justify-content-around">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="gridRadiosColor" type="radio" id="inlineCheckbox4" value="success">
+                              <label class="form-check-label" for="inlineCheckbox1"><span class="badge badge-success text-success" >[]</span></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="gridRadiosColor" type="radio" id="inlineCheckbox5" value="light">
+                              <label class="form-check-label" for="inlineCheckbox2"><span class="badge badge-light text-light" >[]</span></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="gridRadiosColor" type="radio" id="inlineCheckbox6" value="info">
+                              <label class="form-check-label" for="inlineCheckbox3"><span class="badge badge-info text-info" >[]</span></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col text-center">
+                          <label for="categoryIconInput" class="">Icono</label>
+                          <div class="form-group d-flex justify-content-around">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="gridRadiosIcon" type="radio" id="inlineCheckbox7" value="cat" required>
+                              <label class="form-check-label" for="inlineCheckbox7"><i class="fas fa-cat"></i></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="gridRadiosIcon" type="radio" id="inlineCheckbox8" value="dove">
+                              <label class="form-check-label" for="inlineCheckbox8"><i class="fas fa-dove"></i></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="gridRadiosIcon" type="radio" id="inlineCheckbox9" value="fish">
+                              <label class="form-check-label" for="inlineCheckbox9"><i class="fas fa-fish"></i></label>
+                            </div>
+                          </div>
+                          <div class="form-group d-flex justify-content-around">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="gridRadiosIcon" type="radio" id="inlineCheckbox10" value="frog">
+                              <label class="form-check-label" for="inlineCheckbox10"><i class="fas fa-frog"></i></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="gridRadiosIcon" type="radio" id="inlineCheckbox11" value="spider">
+                              <label class="form-check-label" for="inlineCheckbox11"><i class="fas fa-spider"></i></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="gridRadiosIcon" type="radio" id="inlineCheckbox12" value="dog">
+                              <label class="form-check-label" for="inlineCheckbox12"><i class="fas fa-dog"></i></label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+      
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Crear</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+            <!-- Modal para editar nota -->
+            <div class="modal fade" id="editNoteModal" tabindex="-1">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Editar nota</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="editNoteForm">
+                      <div class="form-group">
+                        <label for="editNoteTitleInput">Título</label>
+                        <input type="text" class="form-control" id="editNoteTitleInput" maxlength="60" 
+                        placeholder="" value="" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="editNoteBodyInput">Contenido</label>
+                        <textarea class="form-control" id="editNoteBodyInput" rows="10" maxlength="500" required></textarea>
+                        <small id="noteBodyHelp" class="form-text text-muted">
+                          Máximo 500 caracteres.
+                        </small>
+                      </div>
+                      
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+            <!-- Barra de búsqueda por nombre y apellido -->
+            <div class="card p-4">
+              <form id="searchForm">
+                  <input type="search" id="searchTop" placeholder="Buscar...">
+                  <button type="submit" class="btn btn-outline-info">
+                    <i class="fas fa-search"></i>
+                  </button>
+                  <button class="btn btn-outline-warning" onclick="displayAllNotes()" type="button">Limpiar</button>
+              </form>
+          </div>
+      
+      
+          </section>
+        </div>
+        </div>
+        
+        
       </div>
   </div>
-    <section class="back">
-      <div class="jumbotron">
-        <h1 class="text-center">Notid</h1>
-      </div>
-
-    </section>
     
-    <section>
-      <button type="button" id="addNote" class="btn btn-success" data-toggle="modal" data-target="#addNoteModal"> Agregar </button>
-      <button type="button" id="addCategory" class="btn btn-danger" data-toggle="modal" data-target="#addCategoryModal"> Agregar categoria</button>
-      
-
-      <!-- Contenedor de notas y sus modals-->
-      <div class="row" id="notesContainer"></div>
-      <!--    -->
-
-      <!-- Modal para insertar nota -->
-      <div class="modal fade" id="addNoteModal" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Crear nota</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form id="addNoteForm">
-                <div class="form-group">
-                  <label for="noteTitleInput">Título</label>
-                  <input type="text" class="form-control" id="noteTitleInput" maxlength="60" placeholder="Título de la nota" required>
-                </div>
-                <div class="form-group">
-                  <label for="noteBodyInput">Contenido</label>
-                  <textarea class="form-control" id="noteBodyInput" rows="10" maxlength="500" required></textarea>
-                  <small id="noteBodyHelp" class="form-text text-muted">
-                    Máximo 500 caracteres.
-                  </small>
-                </div>
-                        <div class="form-group">
-                          <label for="noteCategoriesSelect">Categoría</label>
-                          <select class="form-control" id="noteCategoriesSelect">
-                            <option value="ahre">Sin categoria</option>
-                            
-                          </select>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                          <button type="submit" class="btn btn-primary">Crear</button>
-                        </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal para crear categoria -->
-      <div class="modal fade" id="addCategoryModal" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header bg-modal">
-              <h5 class="modal-title">Crear categoría</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body bg-modal">
-              <form id="addCategoryForm">
-                <div class="form-group">
-                  <label for="categoryNameInput">Nombre</label>
-                  <input type="text" class="form-control" id="categoryNameInput" maxlength="20" placeholder="Nombre de nueva categoría" required>
-                  <small id="" class="form-text text-muted">
-                    Máximo 20 caracteres.
-                  </small>
-                </div>
-                <div class="form-group">
-                  <label for="categoryDescriptionInput">Descripción</label>
-                  <input type="text" class="form-control" id="categoryDescriptionInput" maxlength="200" placeholder="Breve descripcion de la categoría" required>
-                  <small id="" class="form-text text-muted">
-                    Máximo 200 caracteres.
-                  </small>
-                </div>
-                <hr>
-
-                <div class="row">
-                  <div class="col text-center">
-                    <label for="categoryColorInput" class="">Color</label>
-                    <div class="form-group d-flex justify-content-around">
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" name="gridRadiosColor" type="radio" id="inlineCheckbox1" value="primary" required>
-                        <label class="form-check-label" for="inlineCheckbox1"><span class="badge badge-primary text-primary" >[]</span></label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" name="gridRadiosColor" type="radio" id="inlineCheckbox2" value="danger">
-                        <label class="form-check-label" for="inlineCheckbox2"><span class="badge badge-danger text-danger" >[]</span></label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" name="gridRadiosColor" type="radio" id="inlineCheckbox3" value="warning">
-                        <label class="form-check-label" for="inlineCheckbox3"><span class="badge badge-warning text-warning" >[]</span></label>
-                      </div>
-                    </div>
-                    <div class="form-group d-flex justify-content-around">
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" name="gridRadiosColor" type="radio" id="inlineCheckbox4" value="success">
-                        <label class="form-check-label" for="inlineCheckbox1"><span class="badge badge-success text-success" >[]</span></label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" name="gridRadiosColor" type="radio" id="inlineCheckbox5" value="light">
-                        <label class="form-check-label" for="inlineCheckbox2"><span class="badge badge-light text-light" >[]</span></label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" name="gridRadiosColor" type="radio" id="inlineCheckbox6" value="info">
-                        <label class="form-check-label" for="inlineCheckbox3"><span class="badge badge-info text-info" >[]</span></label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col text-center">
-                    <label for="categoryIconInput" class="">Icono</label>
-                    <div class="form-group d-flex justify-content-around">
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" name="gridRadiosIcon" type="radio" id="inlineCheckbox7" value="cat" required>
-                        <label class="form-check-label" for="inlineCheckbox7"><i class="fas fa-cat"></i></label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" name="gridRadiosIcon" type="radio" id="inlineCheckbox8" value="dove">
-                        <label class="form-check-label" for="inlineCheckbox8"><i class="fas fa-dove"></i></label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" name="gridRadiosIcon" type="radio" id="inlineCheckbox9" value="fish">
-                        <label class="form-check-label" for="inlineCheckbox9"><i class="fas fa-fish"></i></label>
-                      </div>
-                    </div>
-                    <div class="form-group d-flex justify-content-around">
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" name="gridRadiosIcon" type="radio" id="inlineCheckbox10" value="frog">
-                        <label class="form-check-label" for="inlineCheckbox10"><i class="fas fa-frog"></i></label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" name="gridRadiosIcon" type="radio" id="inlineCheckbox11" value="spider">
-                        <label class="form-check-label" for="inlineCheckbox11"><i class="fas fa-spider"></i></label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" name="gridRadiosIcon" type="radio" id="inlineCheckbox12" value="dog">
-                        <label class="form-check-label" for="inlineCheckbox12"><i class="fas fa-dog"></i></label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                  <button type="submit" class="btn btn-primary">Crear</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal para editar nota -->
-      <div class="modal fade" id="editNoteModal" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Editar nota</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form id="editNoteForm">
-                <div class="form-group">
-                  <label for="editNoteTitleInput">Título</label>
-                  <input type="text" class="form-control" id="editNoteTitleInput" maxlength="60" 
-                  placeholder="" value="" required>
-                </div>
-                <div class="form-group">
-                  <label for="editNoteBodyInput">Contenido</label>
-                  <textarea class="form-control" id="editNoteBodyInput" rows="10" maxlength="500" required></textarea>
-                  <small id="noteBodyHelp" class="form-text text-muted">
-                    Máximo 500 caracteres.
-                  </small>
-                </div>
-                
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                  <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Barra de búsqueda por nombre y apellido -->
-      <div class="card p-4">
-        <form id="searchForm">
-            <input type="search" id="searchTop" placeholder="Buscar...">
-            <button type="submit" class="btn btn-outline-info">
-              <i class="fas fa-search"></i>
-            </button>
-            <button class="btn btn-outline-warning" onclick="displayAllNotes()" type="button">Limpiar</button>
-        </form>
-    </div>
-
-
-    </section>
 
     <!-- Optional JavaScript; choose one of the two! -->
 
@@ -253,6 +269,7 @@
 
 
     <script src="app.js"></script>
+    <script src="functions.js"></script>
     <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>

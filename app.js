@@ -13,6 +13,8 @@ const editNoteBodyInput = document.getElementById('editNoteBodyInput')
 //Búsqueda
 const searchTop = document.getElementById('searchTop');
 const searchForm = document.getElementById('searchForm');
+//Categorias
+const sidebarCategorias = document.getElementById('sidebarCategorias')
 
 //
 //Categorias
@@ -21,9 +23,14 @@ const defaultCategory = [{
     name: "Sin categoria",
     description: "Categoría por defecto",
     color: "brown",
-    icon: "horse"
+    icon: "horse",
+    id: "__________"
 }]
-localStorage.setItem('categories', JSON.stringify(defaultCategory));
+
+const categories = JSON.parse(localStorage.getItem('categories')) || localStorage.setItem('categories', JSON.stringify(defaultCategory))
+// if(categories && true){
+//     localStorage.setItem('categories', JSON.stringify(defaultCategory));
+// }
 
 const addCategory = document.getElementById('addCategory')
 const addCategoryModal = document.getElementById('addCategoryModal')
@@ -84,7 +91,7 @@ return `<!-- Modal -->
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body bg-modal" style="word-wrap: break-word;">
+            <div class="modal-body bg-modal">
                 <h5 class="modal-title" id="exampleModalLabel">${note.category}</h5>
                 <small id="noteBodyHelp" class="form-text text-muted">
                 Creado en ${note.createdAt}.
@@ -171,17 +178,17 @@ function displayNotes(notes) {
         // Creamos en un string el esqueleto de la nota,
         // luego el contenido que ingreso el usuario.
         const newNote = `
-        <div class="col-4">
-        <div class="card text-white bg-warning h-100" >
-            <button class="p-0 border-0 bg-transparent" id="button${note.id}" data-toggle="modal" data-target="#modal${note.id}">
-                <div class="card-header">${note.title}</div>
-                </button>
-                <div class="card-body text-dark">
-                    <h5 class="card-title">${note.title}</h5>
-                    <p class="card-text">${note.body}</p>
-                </div>
-                
-        </div>
+        <div class="col-4 my-2">
+            <div class="card text-white bg-warning h-100" >
+                <button class="p-0 border-0 bg-transparent" id="button${note.id}" data-toggle="modal" data-target="#modal${note.id}">
+                    <div class="card-header">${note.title}</div>
+                    </button>
+                    <div class="card-body text-dark">
+                        <h5 class="card-title">${note.title}</h5>
+                        <p class="card-text">${note.body}</p>
+                    </div>
+                    
+            </div>
         </div>
         ${getModal(note)}
         `
@@ -200,26 +207,48 @@ displayAllNotes();
 addCategoryForm.onsubmit = (e) => {
     e.preventDefault();
     noteCategoriesSelect = document.getElementById('noteCategoriesSelect')
-    // Traer el banco de categorias de localStorage.
+    // Traer el banco de categorías de localStorage.
     const categories = JSON.parse(localStorage.getItem('categories'));
     console.log("categories", categories)
     const name = categoryNameInput.value;
     const description = categoryDescriptionInput.value;
     const categoryColor = getSelectedCheckbox('gridRadiosColor')
     const categoryIcon = getSelectedCheckbox('gridRadiosIcon')
+    const id = generateId()
 
-    // Agregar una nota al array de categorias
+    // Agregar una categoría al array de categorías
     categories.push({
         name,
         description,
         color: categoryColor,
-        icon: categoryIcon
+        icon: categoryIcon,
+        id,
     })
 
-    // Añadir la categoria como opcion
+    // Añadir la categoría como opción al select
     const newOption = document.createElement('option')
     newOption.textContent = `${name}`;
     noteCategoriesSelect.appendChild(newOption);
+
+    // Añadir la categoría en sidebar
+    const newCat = document.createElement('li')
+    newCat.innerHTML= `
+    <li id="item${id}">
+        <div class="d-flex justify-content-between">
+            <button class="btn notid-btn-autimnFoliage border-0" type="button" data-toggle="collapse" data-target="#${id}" aria-expanded="false" aria-controls="collapseExample">
+                ${name}
+            </button>
+            
+            <button class="btn notid-btn-mist border-0" onclick="deleteCategory('${id}')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="collapse notid-sidebar-category" id="${id}">
+            <div class="card card-body bg-transparent">
+                ${description}
+            </div
+        </div>
+    </li>
+`;
+sidebarCategorias.appendChild(newCat);
 
     // Guardar el banco de categorias en localStorage.
     const categoriesJson = JSON.stringify(categories);
@@ -227,11 +256,14 @@ addCategoryForm.onsubmit = (e) => {
 
     console.log("addCategoryForm.onsubmit -> categories", categories);
 
+    //displaycategories();
+
     // Limpiar todos los campos del formulario con reset().
     addCategoryForm.reset();
     // Cerrar el modal
     $(addCategoryModal).modal('hide')
 }
+
 
 function getSelectedCheckbox(name) {
     const checked = document.querySelectorAll(`input[name="${name}"]:checked`)[0].value;

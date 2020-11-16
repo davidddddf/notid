@@ -6,14 +6,18 @@
     background-color: #336b87;
 }
 .notid-bg-shadow{
-    background-color: #2a3132;
+    background-color: #1E1F26;
 }
 .notid-bg-autimnFoliage{
-    background-color: #763626;
+    background-color: #1E1F26;
 }
 .notid-title{
     color: #90afc5;
     font-family: 'Lobster', cursive;
+}
+.notid-white{
+    color: white;
+    font-family: 'Nunito', sans-serif;
 }
 .notid-mist{
     color: #90afc5;
@@ -31,18 +35,61 @@
     color: #763626;
     font-family: 'Nunito', sans-serif;
 }
-.notid-btn-autimnFoliage{
+.notid-btn-mist{
     color: #90afc5;
     border-color: #90afc5;
     font-family: 'Nunito', sans-serif;
 }
-
-.sidebar{
-    height: 100%;
-    position: fixed;
-    z-index: 1;
+.notid-btn-autimnFoliage{
+    color: #763626;
+    border-color:#763626;
+    font-family: 'Nunito', sans-serif;
 }
 
+.notid-btn-sidebar{
+    color: transparent;
+}
+.notid-btn-autimnFoliage:hover{
+    color:#90afc5;
+
+}
+
+.category-item:hover .category-item-close{
+    /* opacity: .3; */
+    color:  #763626;
+    transition-duration: .5s;
+    transition-timing-function: ease-out;
+}
+
+.sidebar{
+    position: sticky;
+    height: 100%;
+    /* top: 0;
+    bottom: 0;
+    left: 0; */
+    z-index: 1;
+}
+.notid-navbar{
+    min-height: 40px;
+}
+
+.notid-sidebar-content{
+    height: calc(100vh - 56px);
+}
+
+.notid-sidebar-category{
+    background-color: #90afc5;
+    border-radius: .2rem;
+    /* opacity: 0.1; */
+    color: #763626;
+    border-color:#763626;
+    font-family: 'Nunito', sans-serif;
+}
+
+.notid-notes-container{
+    border-radius: .3rem;
+    background-color: aliceblue;
+}
 /* Font Awesome Icons */
 .fa-cat {
     color: orange;
