@@ -13,7 +13,7 @@ function displayCategories() {
         const newCategory = `
         <li id="item${category.id}" class="category-item">
             <div class="d-flex justify-content-between">
-                <button class="btn notid-btn-autimnFoliage border-0" type="button" data-toggle="collapse" 
+                <button class="btn notid-btn-stone border-0" type="button" data-toggle="collapse" 
                 data-target="#category${category.id}" aria-expanded="false" aria-controls="collapseExample">
                     ${category.name}
                 </button>

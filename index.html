@@ -21,7 +21,7 @@
 <body>
   <div class="container-fluid px-0">
     <!-- Navbar -->
-    <nav class="navbar navbar-dark sticky-top notid-bg-shadow notid-navbar">
+    <nav class="navbar navbar-dark sticky-top notid-bg-stone notid-navbar">
       <div class="container px-0">
         <a class="navbar-brand notid-title pl-1" href="#">
           <img src="/img/notidLogo.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
@@ -35,9 +35,9 @@
       <!-- Sidebar -->
       <div class="container px-0">
         <div class="row">
-          <nav class="col-3 col-lg-2 d-none d-md-block nav-dark notid-bg-autimnFoliage sidebar collapse">
-            <div class="notid-sidebar-content">
-              <h5 class="notid-white mt-3"><i class="fas fa-layer-group"></i> Categorías</h5> 
+          <nav class="col-3 col-lg-2 d-none d-md-block nav-dark notid-bg-mist sidebar collapse">
+            <div class="notid-sidebar-content pt-1">
+              <h5 class="notid-black mt-3"><i class="fas fa-layer-group"></i> Categorías</h5> 
               <ul class="nav flex-column notid-white" id="sidebarCategorias"></ul>
             </div>
           </nav>
@@ -240,16 +240,19 @@
               </div>
             </div>
       
-            <!-- Barra de búsqueda por nombre y apellido -->
-            <div class="card p-4">
-              <form id="searchForm">
-                  <input type="search" id="searchTop" placeholder="Buscar...">
-                  <button type="submit" class="btn btn-outline-info">
-                    <i class="fas fa-search"></i>
-                  </button>
-                  <button class="btn btn-outline-warning" onclick="displayAllNotes()" type="button">Limpiar</button>
-              </form>
-          </div>
+            <!-- Barra de búsqueda por titulo y contenido -->
+            <div class="card p-4 fixed-bottom notid-bg-stone">
+              <div class="container">
+                <form class="row justify-content-center " id="searchForm">
+                    <input type="search" id="searchTop" placeholder="Buscar..." class="form-control col-8 m-1">
+                    <button type="submit" class="btn notid-btn-mist m-1">
+                      <i class="fas fa-search"></i>
+                    </button>
+                    <button class="btn notid-btn-mist m-1" onclick="displayAllNotes()" type="button">Limpiar</button>
+                </form>
+                <hr>
+              </div>
+            </div>
       
       
           </section>

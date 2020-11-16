@@ -9,7 +9,7 @@
     background-color: #1E1F26;
 }
 .notid-bg-autimnFoliage{
-    background-color: #1E1F26;
+    background-color: #763626;
 }
 .notid-title{
     color: #90afc5;
@@ -17,6 +17,10 @@
 }
 .notid-white{
     color: white;
+    font-family: 'Nunito', sans-serif;
+}
+.notid-black{
+    color: black;
     font-family: 'Nunito', sans-serif;
 }
 .notid-mist{
@@ -40,6 +44,11 @@
     border-color: #90afc5;
     font-family: 'Nunito', sans-serif;
 }
+.notid-btn-stone{
+    color: #2a3132;
+    border-color: #2a3132;
+    font-family: 'Nunito', sans-serif;
+}
 .notid-btn-autimnFoliage{
     color: #763626;
     border-color:#763626;
@@ -49,18 +58,19 @@
 .notid-btn-sidebar{
     color: transparent;
 }
-.notid-btn-autimnFoliage:hover{
-    color:#90afc5;
+.notid-btn-stone:hover{
+    color:#763626;
 
 }
 
+@media (min-width:768px){
 .category-item:hover .category-item-close{
     /* opacity: .3; */
     color:  #763626;
     transition-duration: .5s;
     transition-timing-function: ease-out;
 }
-
+}
 .sidebar{
     position: sticky;
     height: 100%;

@@ -235,7 +235,7 @@ addCategoryForm.onsubmit = (e) => {
     newCat.innerHTML= `
     <li id="item${id}">
         <div class="d-flex justify-content-between">
-            <button class="btn notid-btn-autimnFoliage border-0" type="button" data-toggle="collapse" data-target="#${id}" aria-expanded="false" aria-controls="collapseExample">
+            <button class="btn notid-btn-stone border-0" type="button" data-toggle="collapse" data-target="#${id}" aria-expanded="false" aria-controls="collapseExample">
                 ${name}
             </button>
             
