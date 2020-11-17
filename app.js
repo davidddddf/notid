@@ -167,31 +167,35 @@ function displayAllNotes() {
 //Anadir nueva nota en pantalla
 function displayNotes(notes) {
     // Banco de notas desde de localStorage.
-    //const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    const categories = JSON.parse(localStorage.getItem('categories')) || [];
     const content = [];
-
+    
     for (let i = 0; i < notes.length; i++) {
         // Guardamos los datos de usuario en note.
         const note = notes[i];
+        const categoryAux = note.category;
+        const categoryColor = categories.filter((u) => ((u.name === categoryAux) ))
         //Transformo el atributo note.createdAt a un formato mas comodo
 
         // Creamos en un string el esqueleto de la nota,
         // luego el contenido que ingreso el usuario.
         const newNote = `
-        <div class="col-4 my-2">
-            <div class="card text-white bg-warning h-100" >
-                <button class="p-0 border-0 bg-transparent" id="button${note.id}" data-toggle="modal" data-target="#modal${note.id}">
-                    <div class="card-header">${note.title}</div>
-                    </button>
-                    <div class="card-body text-dark">
-                        <h5 class="card-title">${note.title}</h5>
-                        <p class="card-text">${note.body}</p>
-                    </div>
-                    
-            </div>
+        <div class="col-12 col-md-6 col-lg-4 my-2" style="min-height:1px;">
+        <div class="card text-white bg-light h-100" >
+        <button class="p-0 border-0 bg-transparent" id="button${note.id}" data-toggle="modal" data-target="#modal${note.id}">
+        <div class="card-header bg-${categoryColor[0].color}">${note.title}</div>
+        </button>
+        <div class="card-body text-dark">
+        <h5 class="card-title">${note.title}</h5>
+        <p class="card-text">${note.body}</p>
+        </div>
+        
+        </div>
         </div>
         ${getModal(note)}
         `
+        console.log("displayNotes -> categoryAux[0].color", categoryAux[0].color)
+        
         // Agregamos el string de la nota al array content.
         content.push(newNote)
     }
@@ -235,7 +239,8 @@ addCategoryForm.onsubmit = (e) => {
     newCat.innerHTML= `
     <li id="item${id}">
         <div class="d-flex justify-content-between">
-            <button class="btn notid-btn-stone border-0" type="button" data-toggle="collapse" data-target="#${id}" aria-expanded="false" aria-controls="collapseExample">
+            <button class="btn notid-btn-stone border-0" type="button" data-toggle="collapse" data-target="#${id}" 
+            aria-expanded="false" aria-controls="collapseExample">
                 ${name}
             </button>
             
@@ -244,7 +249,10 @@ addCategoryForm.onsubmit = (e) => {
         <div class="collapse notid-sidebar-category" id="${id}">
             <div class="card card-body bg-transparent">
                 ${description}
-            </div
+                <button class="btn notid-btn-stone border-0" type="button" onclick="categoryFilter('${name}')">
+                Filtrar
+                </button>
+            </div>
         </div>
     </li>
 `;
@@ -301,6 +309,17 @@ searchForm.onsubmit = (e) => {
         // y el método includes() que evalúa si se incluye o no la palabra buscada.
         u.title.toLowerCase().includes(term) || u.body.toLowerCase().includes(term)
     ))
+    // Llamar a la función displayNotes, pasando por parámetros la lista filtrada de usuarios.
+    displayNotes(filteredNotes);
+        console.log(`Se cargó la lista filtrada de usuarios en la tabla. ${filteredNotes.length} resultados encontrados. 🧐`);
+}
+
+//Filtro por categorias
+categoryFilter = (categoryName) => {
+    // Guardar en una constante el banco de notas
+    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    const filteredNotes = notes.filter((u) => ((u.category === categoryName) ))
+    console.log("filteredNotes", filteredNotes)
     // Llamar a la función displayNotes, pasando por parámetros la lista filtrada de usuarios.
     displayNotes(filteredNotes);
         console.log(`Se cargó la lista filtrada de usuarios en la tabla. ${filteredNotes.length} resultados encontrados. 🧐`);

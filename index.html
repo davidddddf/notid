@@ -33,16 +33,21 @@
     <!--     -->
     <!-- Cuerpo de la página -->
       <!-- Sidebar -->
-      <div class="container px-0">
+      <div class="container">
         <div class="row">
-          <nav class="col-3 col-lg-2 d-none d-md-block nav-dark notid-bg-mist sidebar collapse">
-            <div class="notid-sidebar-content pt-1">
-              <h5 class="notid-black mt-3"><i class="fas fa-layer-group"></i> Categorías</h5> 
+          <nav class="col-12 col-md-3 col-lg-2 px-0 d-md-block nav-dark notid-bg-mist sidebar navbar-expand-md">
+            <div class="d-flex justify-content-start d-block d-md-none">
+              <button class="btn navbar-toggler col-6 pl-0" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+                <h5 class="mr-auto"><i class="fas fa-layer-group"></i> Categorías</h5>
+              </button>
+            </div>
+            <h5 class="notid-black mt-3 ml-2 d-none d-md-block"><i class="fas fa-layer-group"></i> Categorías</h5> 
+            <div class="notid-sidebar-content pt-1 collapse navbar-collapse align-items-start" id="sidebar">
               <ul class="nav flex-column notid-white" id="sidebarCategorias"></ul>
             </div>
           </nav>
 
-        <div class="col-12 col-md-9 col-lg-10 px-md-5">
+        <div class="col-12 col-md-9 col-lg-10">
           <div class="d-flex justify-content-between py-3 mb-3 border-bottom">
             <h1 class="mb-0">Mis notas</h1>
             <div class="btn-group">
@@ -59,7 +64,7 @@
             
       
             <!-- Contenedor de notas y sus modals-->
-            <div class="row notid-notes-container" id="notesContainer"></div>
+            <div class="row mx-auto notid-notes-container mb-3" id="notesContainer" style="min-height: 500px;"></div>
             <!--    -->
       
             <!-- Modal para insertar nota -->
@@ -240,19 +245,7 @@
               </div>
             </div>
       
-            <!-- Barra de búsqueda por titulo y contenido -->
-            <div class="card p-4 fixed-bottom notid-bg-stone">
-              <div class="container">
-                <form class="row justify-content-center " id="searchForm">
-                    <input type="search" id="searchTop" placeholder="Buscar..." class="form-control col-8 m-1">
-                    <button type="submit" class="btn notid-btn-mist m-1">
-                      <i class="fas fa-search"></i>
-                    </button>
-                    <button class="btn notid-btn-mist m-1" onclick="displayAllNotes()" type="button">Limpiar</button>
-                </form>
-                <hr>
-              </div>
-            </div>
+            
       
       
           </section>
@@ -262,6 +255,26 @@
         
       </div>
   </div>
+
+  <footer>
+    <!-- Barra de búsqueda por titulo y contenido -->
+    <div class="card notid-bg-stone rounded-0">
+      <div class="container px-0 py-2 d-none d-md-block">
+        <form class="row justify-content-center mx-0" id="searchForm">
+            <input type="search" id="searchTop" placeholder="Buscar..." class="form-control col-12 col-md-8 m-1">
+            <button type="submit" class="btn notid-btn-mist m-1">
+              <i class="fas fa-search"></i>
+            </button>
+            <button class="btn notid-btn-mist m-1" onclick="displayAllNotes()" type="button">Limpiar</button>
+        </form>
+      </div>
+      <div class="card-footer rounded-0 d-flex justify-content-center notid-mist">
+        <p class="d-inline mx-2"> David FM - 2020</p>
+        <span class="d-inline mx-2"><a href="https://github.com/davidddddf" class="footer-link"><i class="fab fa-github"></i></a></span>
+      </div>
+    </div>
+
+  </footer>
     
 
     <!-- Optional JavaScript; choose one of the two! -->

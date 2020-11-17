@@ -13,7 +13,7 @@ function displayCategories() {
         const newCategory = `
         <li id="item${category.id}" class="category-item">
             <div class="d-flex justify-content-between">
-                <button class="btn notid-btn-stone border-0" type="button" data-toggle="collapse" 
+                <button class="btn notid-btn-autimnFoliage border-0" type="button" data-toggle="collapse" 
                 data-target="#category${category.id}" aria-expanded="false" aria-controls="collapseExample">
                     ${category.name}
                 </button>
@@ -22,9 +22,13 @@ function displayCategories() {
                 <i class="fas fa-times"></i></button>
             </div>
             <div class="collapse notid-sidebar-category" id="category${category.id}">
-                <div class="card card-body bg-transparent" style="word-wrap: break-word max-width:80%;">
+                <div class="card card-body notid-notes-container" style="word-wrap: break-word max-width:80%;">
                     ${category.description}
-                </div
+                    <button class="btn btn-sm notid-btn-stone mb-1" type="button" onclick="categoryFilter('${category.name}')">
+                    Filtrar
+                    </button>
+                    <button class="btn btn-sm notid-btn-stone" onclick="displayAllNotes()" type="button">Limpiar</button>
+                </div>
             </div>
         </li>
     `
@@ -65,6 +69,6 @@ function deleteCategory(categoryId) {
         // Actualizar la lista de notas en html llamando a la función displayNotes(). 
         displayCategories();
     } else{
-        alert('No puedes eliminar esta categoría porque contiene al menos una nota')
+        alert('No puedes eliminar esta categoría porque contiene al menos una nota.')
     }
 }
